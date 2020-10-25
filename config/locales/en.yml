@@ -8,4 +8,16 @@ en:
       status: 401
       code: 'INVALID_CREDENTIALS'
       title: 'Invalid Credentials'
+    missing_flower_id:
+      status: 400
+      code: 'MISSING_FLOWER_ID'
+      title: 'Missing Flower ID'
+    unauthenticated_request:
+      status: 401
+      code: 'UNAUTHENTICATED_REQUEST'
+      title: 'Unauthenticated Request'
+    invalid_sighting_data:
+      status: 422
+      code: 'INVALID_SIGHTING_DATA'
+      title: 'Invalid sighting data'
 

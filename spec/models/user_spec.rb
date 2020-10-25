@@ -7,7 +7,6 @@ RSpec.describe User, type: :model do
   it { should have_attribute :username }
   it { should have_attribute :password_digest }
 
-  it { should have_many(:likes).dependent(:destroy) }
   it { should have_many(:sightings).dependent(:destroy) }
 
   it { should validate_uniqueness_of(:email).case_insensitive }
