@@ -1,24 +1,11 @@
-# README
+# Project Requirements
+Click [here](REQUIREMENTS.md) to read the project requirements
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Brief Testing Guide
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Clone the repository and perform bundle install
+2. Create database and run migrations
+4. Set OPENTDB_URL environment variable to https://opentdb.com/api.php?amount=1
+5. Start the Rails server
+6. Run RSpec tests and confirm that they are passing 
+7. Shoot your Postman requests
