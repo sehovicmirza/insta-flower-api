@@ -28,12 +28,14 @@ gem 'rack-cors'
 gem 'active_model_serializers'
 gem 'api-pagination'
 gem 'aws-sdk-s3', '~> 1.83', '>= 1.83.1', require: false
+gem 'faraday', '~> 0.9.2'
 gem 'jwt', '~> 1.5', '>= 1.5.4'
 gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
   gem 'factory_bot_rails', '~> 5.1.1'
   gem 'faker', '~> 2.14.0'
   gem 'rspec-rails', '~> 4.0.1'

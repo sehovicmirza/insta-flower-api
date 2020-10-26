@@ -64,7 +64,30 @@ RSpec.describe SightingsController, type: :controller do
       }
     end
 
-    before { request.headers.merge!(headers) }
+    before do
+      request.headers.merge!(headers)
+
+      stub_request(:get, ENV['OPENTDB_URL']).to_return(
+        lambda do
+          {
+            status: 200,
+            body: {
+              response_code: 0,
+              results: [
+                {
+                  category: 'Entertainment: Video Games',
+                  type: 'multiple',
+                  difficulty: 'easy',
+                  question: 'Which of these is NOT a team available in the game Pok&eacute;mon Go?',
+                  correct_answer: 'Team Rocket',
+                  incorrect_answers: ['Team Instinct', 'Team Valor', 'Team Mysti']
+                }
+              ]
+            }.to_json
+          }
+        end
+      )
+    end
 
     context 'valid data' do
       it 'should be successful' do
@@ -86,6 +109,7 @@ RSpec.describe SightingsController, type: :controller do
         expect(created_sighting.flower_id).to eq(flower.id)
         expect(created_sighting.latitude.to_s).to eq(params[:latitude].round(6).to_s)
         expect(created_sighting.longitude.to_s).to eq(params[:longitude].round(6).to_s)
+        expect(created_sighting.question.keys).to match_array(%w[type category question difficulty correct_answer incorrect_answers])
       end
 
       it 'should return sighting record' do

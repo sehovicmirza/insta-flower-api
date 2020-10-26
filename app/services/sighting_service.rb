@@ -21,7 +21,10 @@ class SightingService
 
   def create
     if valid_params?
-      result[:data][:sighting] = current_user.sightings.create(sighting_attributes)
+      sighting = current_user.sightings.create(sighting_attributes)
+      add_question_to_sighting(sighting)
+
+      result[:data][:sighting] = sighting
     else
       result[:error] = :invalid_sighting_data
     end
@@ -52,5 +55,21 @@ class SightingService
       longitude: params[:longitude],
       image: params[:image]
     }
+  end
+
+  def add_question_to_sighting(sighting)
+    response = question_provider.fetch_question
+
+    if response[:error].blank?
+      sighting.update(question: response[:question])
+    else
+      Rails.logger.error { "OpentDB: Failed to fetch question. Error Code: #{response[:error]}" }
+    end
+  rescue Faraday::Error::TimeoutError
+    # TODO: Schedule background job to execute in one hour from current time
+  end
+
+  def question_provider
+    @question_provider ||= ExternalIntegrations::Opentdb.new
   end
 end
