@@ -28,7 +28,8 @@ RSpec.describe SightingsController, type: :controller do
             latitude: sighting.latitude.to_s,
             longitude: sighting.longitude.to_s,
             user: sighting.user.username,
-            image: ActiveStorage::Blob.service.send(:path_for, sighting.image.key)
+            image: ActiveStorage::Blob.service.send(:path_for, sighting.image.key),
+            likes: sighting.likes
           }
         end
 
@@ -97,7 +98,8 @@ RSpec.describe SightingsController, type: :controller do
           latitude: params[:latitude].round(6).to_s,
           longitude: params[:longitude].round(6).to_s,
           user: user.username,
-          image: ActiveStorage::Blob.service.send(:path_for, created_sighting.image.key)
+          image: ActiveStorage::Blob.service.send(:path_for, created_sighting.image.key),
+          likes: created_sighting.likes
         }
 
         expect(json_response).to eq(expected_result)

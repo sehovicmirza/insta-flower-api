@@ -24,4 +24,8 @@ en:
       status: 403
       code: 'FORBIDDEN_REQUEST'
       title: 'Forbidden Request'
+    invalid_like_data:
+      status: 422
+      code: 'INVALID_LIKE_DATA'
+      title: 'Invalid like data'
 

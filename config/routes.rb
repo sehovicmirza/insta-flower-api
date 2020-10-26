@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :sightings, only: :destroy
+  resources :likes, only: %i[create destroy]
 
   post '/login', to: 'users#login'
 end

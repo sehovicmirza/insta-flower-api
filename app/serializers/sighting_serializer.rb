@@ -1,5 +1,5 @@
 class SightingSerializer < ActiveModel::Serializer
-  attributes :id, :longitude, :latitude, :image, :user
+  attributes :id, :longitude, :latitude, :image, :user, :likes
 
   def image
     if Rails.env.development? || Rails.env.test?

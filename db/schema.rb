@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_093336) do
+ActiveRecord::Schema.define(version: 2020_10_24_094702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2020_10_24_093336) do
     t.index ["name"], name: "index_flowers_on_name", unique: true
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "sighting_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sighting_id"], name: "index_likes_on_sighting_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "sightings", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "flower_id"
@@ -66,6 +75,8 @@ ActiveRecord::Schema.define(version: 2020_10_24_093336) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "likes", "sightings"
+  add_foreign_key "likes", "users"
   add_foreign_key "sightings", "flowers"
   add_foreign_key "sightings", "users"
 end

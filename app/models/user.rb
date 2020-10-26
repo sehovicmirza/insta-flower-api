@@ -6,4 +6,5 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 
   has_many :sightings, dependent: :destroy
+  has_many :likes, dependent: :destroy
 end
