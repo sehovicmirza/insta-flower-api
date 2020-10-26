@@ -140,6 +140,40 @@ RSpec.describe SightingsController, type: :controller do
   end
 
   describe '#destroy' do
-    # TODO
+    let(:user) { FactoryBot.create(:user) }
+    let(:token) { JwtService.encode({ user_id: user.id }) }
+
+    let(:headers) { { Authenticable::AUTH_HEADER => "Bearer #{token}" } }
+    let(:params) { { id: sighting.id } }
+
+    before do
+      request.headers.merge!(headers)
+      delete :destroy, params: params
+    end
+
+    context 'valid data' do
+      let(:sighting) { FactoryBot.create(:sighting, user: user) }
+
+      it 'should be successful' do
+        expect(response).to be_successful
+      end
+
+      it 'should destroy sighting' do
+        expect { sighting.reload }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+
+    context 'invalid data' do
+      let(:second_user) { FactoryBot.create(:user) }
+      let(:sighting) { FactoryBot.create(:sighting, user: second_user) }
+
+      it 'should be forbidden' do
+        expect(response).to be_forbidden
+      end
+
+      it 'should not destroy sighting' do
+        expect { sighting.reload }.not_to raise_error ActiveRecord::RecordNotFound
+      end
+    end
   end
 end

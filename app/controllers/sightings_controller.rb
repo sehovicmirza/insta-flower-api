@@ -24,13 +24,19 @@ class SightingsController < ApplicationController
   end
 
   def destroy
-    # TODO
+    result = sighting_service.destroy
+
+    if result[:error].present?
+      render_error result[:error]
+    else
+      head :ok
+    end
   end
 
   private
 
   def permitted_params
-    params.permit(%i[flower_id sighting_id latitude longitude image])
+    params.permit(%i[id flower_id latitude longitude image])
   end
 
   def sighting_service

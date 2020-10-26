@@ -30,7 +30,13 @@ class SightingService
   end
 
   def destroy
-    # TODO
+    if current_user.sightings.where(id: params[:id]).exists?
+      result[:data][:sighting] = Sighting.destroy(params[:id])
+    else
+      result[:error] = :forbidden_request
+    end
+
+    result
   end
 
   private

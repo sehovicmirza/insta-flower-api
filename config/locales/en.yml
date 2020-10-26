@@ -20,4 +20,8 @@ en:
       status: 422
       code: 'INVALID_SIGHTING_DATA'
       title: 'Invalid sighting data'
+    forbidden_request:
+      status: 403
+      code: 'FORBIDDEN_REQUEST'
+      title: 'Forbidden Request'
 
